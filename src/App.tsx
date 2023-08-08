@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ProductList from "./ProductList";
+import { productItem } from "./types/types";
 
 export default function App() {
-  const [storeItems, setStoreItems] = useState([]);
+  const [storeItems, setStoreItems] = useState<productItem[]>([]);
   const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
