@@ -1,5 +1,5 @@
 import ProductItem from "./ProductItem";
-import { productItem, productList } from "./types/types";
+import { productItem, productList } from "../types/types";
 
 export default function ProductList({storeItems}: productList) {
   return (

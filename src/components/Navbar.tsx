@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
+import { Fragment, useEffect, useState } from "react";
+import { Dialog, Popover, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
@@ -9,7 +9,7 @@ import {
 
 import axios from "axios";
 
-export default function HomePage({ children }: { children: React.ReactNode }) {
+export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [navigationItems, setNavigationItems] = useState([]);
@@ -224,9 +224,6 @@ export default function HomePage({ children }: { children: React.ReactNode }) {
           </div>
         </nav>
       </header>
-
-      <h1 className="text-3xl text-center mb-10">Estore</h1>
-      {children}
     </div>
   );
 }

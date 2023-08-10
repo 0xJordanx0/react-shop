@@ -1,4 +1,4 @@
-import { productItem } from "./types/types";
+import { productItem } from "../types/types";
 
 export default function ProductItem(props: productItem) {
   return (

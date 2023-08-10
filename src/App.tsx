@@ -1,23 +1,27 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import ProductList from "./ProductList";
-import { productItem } from "./types/types";
-import HomePage from "./HomePage";
-export default function App() {
-  const [storeItems, setStoreItems] = useState<productItem[]>([]);
-  const [isLoading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get("https://fakestoreapi.com/products")
-      .then((response) => setStoreItems(response.data))
-      .finally(() => setLoading(false));
-  }, []);
+import AppLayout from "./Layouts/AppLayout";
+import HomePage from "./Pages/HomePage";
+import { createBrowserRouter, RouterProvider} from "react-router-dom";
+import ProductPage from "./Pages/ProductPage";
 
-  if (isLoading) return "Loading..";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "home",
+        element: <HomePage />
+      },
+      {
+        path: "product/:id",
+        element: <ProductPage />
+      }
+    ]
+  }
+])
+export default function App() {
+
   return (
-    <HomePage>
-      <ProductList storeItems={storeItems} />
-    </HomePage>
+   <RouterProvider router={router} />
   );
 }
