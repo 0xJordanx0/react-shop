@@ -1,6 +1,6 @@
 import AppLayout from "./Layouts/AppLayout";
 import HomePage from "./Pages/HomePage";
-import { createBrowserRouter, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProductPage from "./Pages/ProductPage";
 
 const router = createBrowserRouter([
@@ -10,18 +10,17 @@ const router = createBrowserRouter([
     children: [
       {
         path: "home",
-        element: <HomePage />
+        element: <HomePage />,
       },
       {
         path: "product/:id",
-        element: <ProductPage />
-      }
-    ]
-  }
-])
+        element: <ProductPage />,
+      },
+    ],
+  },
+]);
 export default function App() {
-
   return (
-   <RouterProvider router={router} />
+      <RouterProvider router={router} />
   );
 }
