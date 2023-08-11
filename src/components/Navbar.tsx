@@ -7,8 +7,9 @@ import {
 } from "@heroicons/react/24/outline";
 
 import axios from "axios";
-import { useCart } from "../contexts/useContextCart";
 import Cart from "./Cart";
+import { Link } from "react-router-dom";
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -138,14 +139,14 @@ export default function Navbar() {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
+                <Link to="/home">
                   <span className="sr-only">Your Company</span>
                   <img
                     className="h-12 w-auto"
                     src="/logo.png"
                     alt=""
                   />
-                </a>
+                </Link>
               </div>
 
               <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
