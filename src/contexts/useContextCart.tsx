@@ -12,7 +12,6 @@ function CartProvider({children}) {
   return (
     <CartContext.Provider value={{cart, addItemToCart}}>
         {children}
-        <p>test</p>
     </CartContext.Provider>
   )
 }
