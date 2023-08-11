@@ -5,8 +5,6 @@ import { CartProvider } from "../contexts/useContextCart";
 import Spinner from "../components/Spinner";
 export default function AppLayout() {
   const navigation = useNavigation();
-
-  console.log(navigation.state);
   if (navigation.state === "loading") return "loading";
 
   return (
