@@ -1,7 +1,12 @@
 import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
-import { ShoppingBagIcon, ArchiveBoxXMarkIcon } from "@heroicons/react/24/outline";
+import {
+  ShoppingBagIcon,
+  ArchiveBoxXMarkIcon,
+} from "@heroicons/react/24/outline";
 import { useCart } from "../contexts/useContextCart";
+import { cartItem } from "../types/types";
+import { NavLink } from "react-router-dom";
 export default function Cart() {
   const { cart } = useCart();
   return (
@@ -28,17 +33,30 @@ export default function Cart() {
       >
         <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-1xl">
           <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-            <div className="relative bg-white px-7">
-              {cart.map((item) => (
-                <div className="flex justify-around items-center mx-auto p-7 border-b-2">
-                  <img src={item.image} className="h-16" />
-                  <div className="flex flex-col">
-                    <span>{item.title}</span>
-                    <span className="text-gray-500">Color</span>
+            <div className="relative bg-white p-7 pt-0">
+              {cart.length > 0 ? (
+                cart.map((item: cartItem) => (
+                  <div
+                    key={item.title}
+                    className="flex justify-between items-center mx-auto p-7 pl-0 border-b-2"
+                  >
+                    <div className="flex gap-5 items-center">
+                      <img src={item.image} className="h-16" />
+                      <div className="flex flex-col">
+                        <span>{item.title}</span>
+                        <span className="text-sm text-gray-500">Color: {item.color}</span>
+                        <span className="text-sm text-gray-500">Size: {item.size}</span>
+                      </div>
+                    </div>
+                    <ArchiveBoxXMarkIcon className="h-6 w-6 text-gray-500" />
                   </div>
-                  <ArchiveBoxXMarkIcon className="h-6 w-6 text-gray-500" />
-                </div>
-              ))}
+                ))
+              ) : (
+                <p className="text-center p-7">Cart is empty!</p>
+              )}
+              <NavLink to="/checkout" className="block bg-indigo-600 text-white p-2 text-center rounded-md">
+                Checkout
+              </NavLink>
             </div>
           </div>
         </Popover.Panel>
