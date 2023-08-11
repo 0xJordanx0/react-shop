@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { RadioGroup } from "@headlessui/react";
-import { productItem } from "../types/types";
+import { cartItem, productItem } from "../types/types";
 import { useParams } from "react-router-dom";
+import { useCart } from "../contexts/useContextCart";
+
 const colors = [
   { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
   { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
@@ -23,7 +25,7 @@ const sizes = [
 
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
@@ -32,18 +34,33 @@ export default function ProductPage() {
   const [product, setProduct] = useState<productItem | null>(null);
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
+  const { addItemToCart } = useCart();
 
   const params = useParams();
 
+  function handleAddToCart() {
+    const newItem: cartItem = {
+      title: product.title,
+      price: product.price,
+      quantity: 1,
+      image: product.image,
+      size: selectedSize.name,
+      color: selectedColor.name,
+    };
+    addItemToCart(newItem);
+  }
+
   useEffect(() => {
     setLoading(true);
-    axios.get(`https://fakestoreapi.com/products/${params.id}`).then((response) => {
-      setProduct(response.data);
-      setLoading(false);
-    });
+    axios
+      .get(`https://fakestoreapi.com/products/${params.id}`)
+      .then((response) => {
+        setProduct(response.data);
+        setLoading(false);
+      });
   }, []);
 
-  if(isLoading) return null;
+  if (isLoading) return null;
   return (
     <div className="bg-white">
       <div className="pt-6">
@@ -54,7 +71,10 @@ export default function ProductPage() {
           >
             <li>
               <div className="flex items-center">
-                <a href="#" className="mr-2 text-sm font-medium text-gray-900 capitalize">
+                <a
+                  href="#"
+                  className="mr-2 text-sm font-medium text-gray-900 capitalize"
+                >
                   {product.category}
                 </a>
                 <svg
@@ -89,7 +109,7 @@ export default function ProductPage() {
               alt="product"
               className="h-96 w-fit md:w-full"
             />
-             <img
+            <img
               src={product.image}
               alt="product"
               className="h-96 w-full hidden md:block"
@@ -263,14 +283,14 @@ export default function ProductPage() {
                   </div>
                 </RadioGroup>
               </div>
-
-              <button
-                type="submit"
-                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                Add to bag
-              </button>
             </form>
+            <button
+              onClick={() => handleAddToCart()}
+              type="submit"
+              className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              Add to Cart
+            </button>
           </div>
 
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
@@ -282,7 +302,7 @@ export default function ProductPage() {
                 <p className="text-base text-gray-900">{product.description}</p>
               </div>
             </div>
-         
+
             <div className="mt-10">
               <h2 className="text-sm font-medium text-gray-900">Details</h2>
 
