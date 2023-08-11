@@ -1,3 +1,13 @@
+type Cart = {
+    cartItems: cartItem
+}
+
+type cartItem = {
+    title: string,
+    price: number,
+    quantity: number,
+    image: string
+}
 
 type productList = {
     storeItems: productItem[]
@@ -18,4 +28,4 @@ type rating = {
     count: number
 }
 
-export type {productList, productItem};
+export type {Cart, cartItem, productList, productItem};
